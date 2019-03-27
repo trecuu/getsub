@@ -16,7 +16,7 @@ def get_hash(name):
             data += f.read(readsize)
         return hashlib.md5(data).hexdigest()
 
-def get_sub(fileHash):
+def get_sub(fileHash, language):
 	url = 'http://api.thesubdb.com/?action=download&hash='+fileHash+'&language='+language 
 	url = requests.get(url, headers=user_agent)
 	if str(url.status_code) == '404':
@@ -30,6 +30,6 @@ def get_sub(fileHash):
 
 
 videoHash = get_hash(str(sys.argv[1]))
-get_sub(videoHash)
+get_sub(videoHash,language)
 
 time.sleep(1)
