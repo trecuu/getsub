@@ -5,6 +5,7 @@ import hashlib
 import requests
 
 user_agent = {'User-Agent': "SubDB/1.0 (getsub/0.1; http://github.com/trecuu/getsub)"}
+language = 'pt,en'#selected languages
 
 def get_hash(name):
         readsize = 64 * 1024
@@ -16,14 +17,14 @@ def get_hash(name):
         return hashlib.md5(data).hexdigest()
 
 def get_sub(fileHash):
-	url = 'http://api.thesubdb.com/?action=download&hash='+fileHash+'&language=pt,en'
-	r = requests.get(url, headers=user_agent)
-	if str(r.status_code) == '404':
+	url = 'http://api.thesubdb.com/?action=download&hash='+fileHash+'&language='+language 
+	url = requests.get(url, headers=user_agent)
+	if str(url.status_code) == '404':
 		print ('Not Found')
-	elif str(r.status_code) == '400':
+	elif str(url.status_code) == '400':
 		print ('Bad Request')
-	elif str(r.status_code) == '200':
-		open(str(sys.argv[1])+'.srt', 'wb').write(r.content)
+	elif str(url.status_code) == '200':
+		open(str(sys.argv[1])+'.srt', 'wb').write(url.content)
 		print ('SUB DOWNLOADED!')
 
 
