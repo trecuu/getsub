@@ -6,6 +6,8 @@ import requests
 
 user_agent = {'User-Agent': "SubDB/1.0 (getsub/0.1; http://github.com/trecuu/getsub)"}
 language = 'pt,en'#selected languages
+videoFile = str(sys.argv[1]) #file location ex.: C:\Downloads\Video.mkv
+
 
 def get_hash(name):
         readsize = 64 * 1024
@@ -16,6 +18,7 @@ def get_hash(name):
             data += f.read(readsize)
         return hashlib.md5(data).hexdigest()
 
+
 def get_sub(fileHash, language):
 	url = 'http://api.thesubdb.com/?action=download&hash='+fileHash+'&language='+language 
 	url = requests.get(url, headers=user_agent)
@@ -24,12 +27,12 @@ def get_sub(fileHash, language):
 	elif str(url.status_code) == '400':
 		print ('Bad Request')
 	elif str(url.status_code) == '200':
-		open(str(sys.argv[1])+'.srt', 'wb').write(url.content)
+		open(videoFile[:-4]+'.srt', 'wb').write(url.content)
 		print ('SUB DOWNLOADED!')
 
 
 
-videoHash = get_hash(str(sys.argv[1]))
+videoHash = get_hash(videoFile)
 get_sub(videoHash,language)
 
 time.sleep(1)
