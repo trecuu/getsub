@@ -35,3 +35,5 @@ dist/getsub/select.pyd
 dist/getsub/unicodedata.pyd
 dist/getsub/VCRUNTIME140.dll
 getsub.spec
+dist/getsub/addToReg.bat
+dist/getsub/deleteFromReg.bat
